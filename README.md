@@ -1,126 +1,77 @@
 # CIND820-Big-Data-Analytics-Project
 CIND820: Big Data Analytics Project
 
-# Tax Risk Profiling with Machine Learning and Firm Governance
 
-This repository contains the full empirical workflow for a machine‑learning–based analysis of corporate tax risk. The project integrates **supervised prediction, governance-based inference, and unsupervised clustering** to identify, explain, and validate persistent tax‑risk profiles among firms.
+## Repository Contents
 
-The analysis is organized around three research questions (RQ1–RQ3) and uses firm‑level financial, ownership, and governance data.
+The repository consists of the following files:
 
----
+- **`Campbell_Douglas_FinalReport.ipynb`**  
+  Main Jupyter Notebook containing all data preparation, model estimation, evaluation, and visualizations for Research Questions 1–3.
 
-## Project Structure
+- **`Campbell_Douglas_FinalReport.html`**  
+  HTML export of the notebook for easy viewing without running code.
 
-- `Code V6.ipynb`  
-  End‑to‑end, cleaned notebook running all analyses (RQ1–RQ3)
+- **`KoTaP_Dataset (1).csv`**  
+  Input dataset containing firm‑level financial, governance, and tax variables.
 
-- `Code V6.html`  
-  Rendered execution output including tables, metrics, and figures
+- **`Appendix_DataOutputSummary_Final.xlsx`**  
+  Excel appendix summarizing model results, governance coefficients, clustering outputs, and computational diagnostics.
 
-- 'KoTaP_Dataset.csv`  
-  Input dataset 
 
----
 
-## Research Questions
+## How to Reproduce the Results
 
-**RQ1 — Prediction:**  
-Can firms with high tax risk be identified using financial and governance characteristics?
+### 1. Software Requirements
 
-**RQ2 — Explanation:**  
-How do governance mechanisms relate to tax risk across alternative tax definitions and horizons?
+The analysis was conducted using Python (version ≥ 3.8) and the following packages:
 
-**RQ3 — Profiling:**  
-Do firms cluster into stable, interpretable tax‑risk profiles based on governance and firm characteristics?
+- pandas  
+- numpy  
+- scikit‑learn  
+- matplotlib  
+- psutil  
+- jupyter  
 
----
-
-## Data and Features
-
-- Firm‑level financial variables (profitability, leverage, liquidity, size, growth)
-- Governance and ownership variables (foreign ownership, insider ownership, Big4 auditor, market listing)
-- Industry fixed effects
-- Multiple tax‑risk measures:
-  - Cash and book effective tax rates (CETR, GETR)
-  - Persistent tax measures (3‑year and 5‑year averages)
-  - Book–tax difference indicators (TSTA, TSDA)
+All computations are executed within the Jupyter Notebook environment.
 
 ---
 
-## Methods Overview
+### 2. Running the Analysis
 
-### RQ1 — Supervised Classification
-- Models:
-  - Logistic regression (baseline)
-  - Logistic regression (class‑weighted)
-  - K‑Nearest Neighbors (benchmark)
-- Feature selection:
-  - Low‑variance filtering
-  - High‑correlation pruning
-  - Mutual information screening
-- Evaluation:
-  - Accuracy, precision, recall, F1
-  - Confusion matrices
-  - TimeSeriesSplit (forward‑looking validation)
+1. Open `Campbell_Douglas_FinalReport.ipynb` in Jupyter Notebook or JupyterLab.
+2. Ensure `KoTaP_Dataset (1).csv` is located in the same directory as the notebook.
+3. Run all cells from top to bottom.
 
-**Key insight:**  
-Baseline models achieve high accuracy but fail to detect high‑risk firms.  
-Class‑weighted models substantially improve high‑risk recall, making them suitable for screening applications.
+The notebook performs:
+- Data cleaning and preprocessing  
+- Label construction using train‑sample quantiles  
+- Model estimation for governance‑based classifiers  
+- Risk profiling via K‑means clustering  
+- Visualization and diagnostic reporting  
 
 ---
 
-### RQ2 — Governance Models
-- Logistic regression with governance and industry controls
-- Unweighted (primary specification) and class‑weighted (robustness)
-- Focus on coefficient stability and interpretability
+## Outputs
 
-**Key findings:**
-- Firm size, foreign ownership, and insider ownership consistently reduce tax risk
-- Market listing status (KOSPI) is positively associated with certain book‑tax risk measures
-- Results are robust across tax definitions and time horizons
+Running the notebook reproduces:
 
----
+- Printed model performance summaries in the notebook output
+- Figures (elbow plots, silhouette plots, PCA projections)
+- An Excel appendix (`Appendix_DataOutputSummary_Final.xlsx`) containing:
+  - Classification performance metrics
+  - Governance variable coefficients
+  - Cluster profiles and tax outcomes
+  - Computational timing and memory diagnostics
 
-### RQ3 — Unsupervised Risk Profiling
-- Algorithm: K‑Means clustering
-- Features:
-  - Firm size, ownership, governance, market listing, firm age
-- Diagnostics:
-  - Elbow method
-  - Silhouette score
-- Validation:
-  - Single‑year tax outcomes
-  - Persistent 3‑ and 5‑year tax measures
-  - Pre‑ and post‑COVID subsample analysis
-
-**Final choice:**  
-Three clusters (k = 3), balancing interpretability and statistical separation.
+The HTML file provides a static, fully rendered version of the results.
 
 ---
 
-## Main Results
+## Notes on Reproducibility
 
-### Predictive Performance (RQ1)
-- Unweighted models: high overall accuracy, poor high‑risk detection
-- Class‑weighted models: lower accuracy but strong recall for high‑risk firms
-- Results stable across time‑series validation
-
-### Governance Effects (RQ2)
-- Governance variables exhibit consistent, economically meaningful signs
-- Effects robust across models, tax measures, and weighting schemes
-
-### Tax‑Risk Profiles (RQ3)
-Three distinct firm profiles emerge:
-
-1. **High‑Risk Cluster**  
-   Smaller, weakly governed firms with the lowest effective tax rates
-
-2. **Intermediate Cluster**  
-   Moderately sized, mature firms with mixed governance characteristics
-
-3. **Low‑Risk Cluster**  
-   Large, well‑governed firms with higher and more stable effective tax rates
-
-Clusters are validated by persistent tax behavior and remain stable across subsamples.
-
----
+- Train/test splits are time‑based (pre‑2020 vs. post‑2020).
+- Label thresholds are computed using training data only.
+- All preprocessing steps are implemented within scikit‑learn pipelines.
+- Random seeds are fixed where applicable (e.g., clustering).
+- All reported results can be regenerated deterministically from the notebook.
