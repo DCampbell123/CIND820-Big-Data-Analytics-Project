@@ -15,6 +15,9 @@ The repository consists of the following files:
 - **`KoTaP_Dataset (1).csv`**  
   Input dataset containing firm‑level financial, governance, and tax variables.
 
+  - **`Dataset Analysis.pdf`**  
+  Detailed analysis of the dataset
+
 - **`Appendix_DataOutputSummary_Final.xlsx`**  
   Excel appendix summarizing model results, governance coefficients, clustering outputs, and computational diagnostics.
 
